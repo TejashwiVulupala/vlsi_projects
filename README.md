@@ -86,6 +86,20 @@ The project followed a professional-grade HDL design and verification workflow, 
 2.  **Simulation & Verification:** Functional correctness was rigorously verified using **Icarus Verilog (`iverilog`)** for compilation and the `vvp` runtime for execution. Testbenches were written to stimulate the design and check for correct behavior. Waveform analysis and debugging were performed with **GTKWave**.
 3.  **Synthesis & Implementation:** The **Xilinx Vivado Design Suite** was used for the complete flow of logic synthesis, placement, routing, and bitstream generation targeting the Zynq-7000 FPGA. **Yosys** was also used for preliminary open-source synthesis checks to ensure portability and standards compliance.
 
+### Simulation Waveform Analysis
+
+Visual inspection of simulation waveforms using GTKWave was crucial for debugging the design and verifying low-level signal behavior. The following waveforms capture key operations of the SoC.
+
+**AXI4-Lite Transaction for CRC32 Accelerator:**
+This waveform shows the CPU initiating a write-then-read transaction to the CRC32 accelerator. We can observe the AXI4-Lite channel signals (`AWVALID`, `AWADDR`, `WVALID`, `WDATA`, `ARVALID`, `ARADDR`, `RVALID`, `RDATA`, `RRESP`) correctly performing the handshake to send data to the accelerator and retrieve the calculated checksum. This validates the AXI-compliant interface of the peripheral.
+
+![AXI Transaction Waveform](docs/sim_results/waves/wave_1.jpg)
+
+**PicoRV32 Instruction Fetch and Execute:**
+This waveform captures the PicoRV32 core fetching instructions from BRAM. The `pc_reg` signal shows the program counter incrementing, while the memory interface signals show the corresponding instruction being read from memory and fed into the processor's instruction decoder. This level of verification confirms the core is correctly executing its program flow.
+
+![PicoRV32 Instruction Fetch Waveform](docs/sim_results/waves/wave_2.jpg)
+
 ---
 
 ## 6. Performance and Resource Analysis: Justification of Results
